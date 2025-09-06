@@ -1,4 +1,344 @@
-<!DOCTYPE html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>orn.js — ORM for Node JSON DB · Docs & Home</title>
+
+  <!-- BeerCSS (lightweight) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/beer-css/beer-css@latest/dist/beer.min.css">
+  <!-- Font: Poppins -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="" crossorigin="anonymous">
+
+  <!-- Alpine.js for interactivity -->
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.4/dist/cdn.min.js"></script>
+
+  <style>
+    :root{
+      --brand: #ff7a18; /* sweet orange */
+      --brand-2: #ffb570;
+      --muted: #6b6b6b;
+      --glass: rgba(255,255,255,0.06);
+      --card-shadow: 0 10px 30px rgba(16,24,40,0.08);
+      font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    }
+    body { background: linear-gradient(180deg, #fffaf6 0%, #fff7f0 100%); color:#1f2937; }
+    header.site { border-bottom:1px solid rgba(0,0,0,0.04); background:linear-gradient(90deg,var(--brand) 0%, var(--brand-2) 100%); color:white; }
+    .nav-link { color: rgba(255,255,255,0.95); text-decoration:none; padding:0.5rem 0.75rem; display:inline-block; border-radius:8px; }
+    .nav-link:hover{ background: rgba(255,255,255,0.07); }
+    .btn-primary { background:var(--brand); color:white; border:0; padding:0.6rem 1rem; border-radius:10px; font-weight:600; box-shadow: var(--card-shadow); }
+    .hero { padding:2.25rem 1rem; display:grid; gap:1rem; grid-template-columns:1fr; align-items:center; }
+    .card { background:white; border-radius:14px; padding:1rem; box-shadow: var(--card-shadow); }
+    .feature-grid { display:grid; gap:1rem; grid-template-columns:repeat(1,1fr); }
+    @media(min-width:900px){ .hero { grid-template-columns: 1fr 420px; } .feature-grid{ grid-template-columns:repeat(3,1fr);} }
+    pre.code { background:#0b1220; color:#e6eef8; padding:1rem; border-radius:10px; overflow:auto; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Courier New", monospace; font-size:0.9rem; }
+    footer{ padding:1.25rem; text-align:center; color:var(--muted); }
+    .logo { display:inline-flex; gap:0.5rem; align-items:center; font-weight:700; letter-spacing:0.2px; }
+    .logo .mark { width:36px; height:36px; border-radius:10px; background:linear-gradient(45deg,#fff 0%, rgba(255,255,255,0.15) 50%), linear-gradient(135deg,var(--brand), var(--brand-2)); display:flex; align-items:center; justify-content:center; color:white; font-weight:800; }
+    .badge { background: linear-gradient(90deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03)); padding:0.25rem 0.45rem; border-radius:999px; font-size:0.75rem; color:white; }
+    nav .cta { margin-left:.5rem; }
+  </style>
+</head>
+<body x-data="site()" x-init="init()" class="min-h-screen">
+
+  <!-- Header / Nav -->
+  <header class="site p-3">
+    <div class="container" style="display:flex;align-items:center;justify-content:space-between;">
+      <div style="display:flex;gap:1rem;align-items:center;">
+        <a href="#" @click.prevent="goto('home')" class="logo">
+          <span class="mark">🍊</span>
+          <div>
+            <div style="font-size:1.05rem">orn.js</div>
+            <div style="font-size:0.72rem;opacity:0.9">ORM · Node JSON DB · single-file</div>
+          </div>
+        </a>
+      </div>
+
+      <nav style="display:flex;align-items:center;gap:0.5rem;">
+        <a class="nav-link" href="#" @click.prevent="goto('home')">Home</a>
+        <a class="nav-link" href="#" @click.prevent="goto('docs')">Docs</a>
+        <a class="nav-link" href="#" @click.prevent="goto('about')">About</a>
+        <a class="nav-link" href="#" @click.prevent="goto('manual')">Manual</a>
+        <a class="nav-link" href="#" @click.prevent="goto('contact')">Contact</a>
+        <a class="nav-link" href="#" @click.prevent="goto('legal')">Legal</a>
+        <a class="btn-primary cta" href="orn.js" download><i class="fa fa-download" aria-hidden="true"></i> Download</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container" style="padding:1rem 0;">
+    <!-- HOME -->
+    <template x-if="view==='home'">
+      <section class="hero">
+        <div>
+          <div class="card">
+            <h1 style="margin:0;font-size:1.6rem">orn.js — Sweet, portable ORM for JSON</h1>
+            <p style="color:var(--muted)">Single-file, zero-dependency JavaScript ORM + JSON DB. Designed for developer happiness — readable, productive, and production-ready.</p>
+            <div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-top:0.5rem;">
+              <a class="btn-primary" href="#" @click.prevent="goto('docs')"><i class="fa fa-book"></i> Read Docs</a>
+              <a class="nav-link" href="orn.js" download><i class="fa fa-file-code"></i> Download orn.js</a>
+              <a class="nav-link" href="#" @click.prevent="goto('manual')"><i class="fa fa-gear"></i> User Manual</a>
+            </div>
+            <div style="margin-top:1rem;display:flex;gap:0.75rem;flex-wrap:wrap;">
+              <span class="badge">Single-file</span>
+              <span class="badge">Zero deps</span>
+              <span class="badge">NDJSON + WAL</span>
+              <span class="badge">Node & Browser</span>
+            </div>
+          </div>
+
+          <div style="margin-top:1rem;">
+            <div class="card">
+              <h3 style="margin-top:0">Why orn.js?</h3>
+              <ul style="margin:0;padding-left:1.1rem;color:var(--muted)">
+                <li>Plug into any project with one file — no build step required.</li>
+                <li>Human-first ORM syntax (inspired by Rails). Learn in minutes.</li>
+                <li>Fallback JSON storage when binaries like SQLite aren’t available.</li>
+                <li>Designed for DevX and scale-ready architecture for future sharding & replication.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div style="margin-top:1rem;">
+            <div class="card">
+              <h4>Quick Example — Node</h4>
+              <pre class="code">
+// import (CommonJS)
+const orn = require('./orn.js')();
+(async()=>{
+  const db = orn.db();
+  const users = db.model('users');
+  const u = await users.create({name:'Alice',email:'alice@example.com'});
+  console.log('created', u);
+  const found = await users.find(u.id);
+  console.log(found);
+})();
+              </pre>
+            </div>
+          </div>
+        </div>
+
+        <aside>
+          <div class="card" style="position:sticky;top:1rem;">
+            <h4 style="margin-top:0">Features</h4>
+            <ul style="padding-left:1rem;color:var(--muted)">
+              <li>NDJSON file store + WAL</li>
+              <li>Compact & snapshot</li>
+              <li>Primary & secondary index hooks</li>
+              <li>ActiveRecord-like ORM</li>
+              <li>Browser & Node adapters</li>
+              <li>Admin CLI & tiny UI</li>
+            </ul>
+            <hr />
+            <h5>Get started</h5>
+            <ol style="padding-left:1rem;color:var(--muted)">
+              <li>Download <code>orn.js</code></li>
+              <li>Include in your Node app or browser</li>
+              <li>Call <code>orn()</code> to create DB instance</li>
+            </ol>
+          </div>
+        </aside>
+      </section>
+    </template>
+
+    <!-- DOCS -->
+    <template x-if="view==='docs'">
+      <section class="card" style="padding:1.25rem;">
+        <h2 style="margin-top:0">Docs — orn.js (single-file)</h2>
+        <p style="color:var(--muted)">Concise API for common tasks. Everything below runs with no external dependency.</p>
+
+        <h3>Initialization</h3>
+        <pre class="code">
+// Node (CommonJS)
+const orn = require('./orn.js')({ root:'./data' }); // optional root folder
+const db = orn.db();
+
+// Browser (ES module)
+/*
+<script type="module">
+  import orn from './orn.js';
+  const db = orn.db({adapter:'localStorage'});
+</script>
+*/
+        </pre>
+
+        <h3>Models & CRUD (DevX-friendly)</h3>
+        <pre class="code">
+// Create
+const users = db.model('users');
+const alice = await users.create({name:'Alice', email:'a@x.com'});
+
+// Read
+const u = await users.find(alice.id);
+const all = await users.all();
+
+// Update
+await users.update(alice.id, {email:'alice@new.com'});
+
+// Delete
+await users.delete(alice.id);
+        </pre>
+
+        <h3>Querying</h3>
+        <pre class="code">
+// Filters: pass a predicate
+const active = await users.where(u => u.active).all();
+
+// Simple SQL-like (v1)
+const rows = await db.query('SELECT * FROM users');
+        </pre>
+
+        <h3>Relations (example)</h3>
+        <pre class="code">
+// Define by convention: user_id on posts
+const posts = db.model('posts');
+await posts.create({title:'Hello', user_id:alice.id});
+// Load by query
+const alicePosts = (await posts.where(p=>p.user_id===alice.id)).all();
+        </pre>
+
+        <h3>Persistence</h3>
+        <p style="color:var(--muted)">Files stored as NDJSON + WAL. Use <code>db.compactAll()</code> to compact storage in v1.</p>
+
+        <h3>Extensions & Roadmap</h3>
+        <ul style="color:var(--muted)">
+          <li>Indexing & secondary indexes</li>
+          <li>MVCC snapshots & transactions</li>
+          <li>CLI admin & tiny admin UI</li>
+          <li>WASM/browser full SQL support</li>
+        </ul>
+
+        <div style="margin-top:1rem;display:flex;gap:.5rem;">
+          <a class="btn-primary" href="orn.js" download><i class="fa fa-download"></i> Download orn.js</a>
+          <a class="nav-link" href="#" @click.prevent="goto('manual')">Full Manual</a>
+        </div>
+      </section>
+    </template>
+
+    <!-- ABOUT -->
+    <template x-if="view==='about'">
+      <section class="card">
+        <h2>About orn.js</h2>
+        <p style="color:var(--muted)">orn.js is created to be a sweet, portable ORM for JavaScript developers. Built as a single-file library so it can be embedded into small apps, edge functions, or served from static hosting — no build required.</p>
+
+        <h4>Philosophy</h4>
+        <p style="color:var(--muted)">Developer Experience first — concise API, readable code, no friction. Make it effortless for juniors, powerful for seniors.</p>
+
+        <h4>Team & Credits</h4>
+        <p style="color:var(--muted)">Created by John Kesh Mahugu. Community contributions welcome — open-source MIT.</p>
+      </section>
+    </template>
+
+    <!-- MANUAL -->
+    <template x-if="view==='manual'">
+      <section class="card">
+        <h2>User Manual</h2>
+        <p style="color:var(--muted)">A short manual covering installation, API reference, and best practices.</p>
+
+        <h3>Installation</h3>
+        <pre class="code">
+// Simply copy orn.js to your project root.
+// Node: require('./orn.js')()
+// Browser: <script src="orn.js"></script> (or import as ES module)
+        </pre>
+
+        <h3>Best practices</h3>
+        <ul style="color:var(--muted)">
+          <li>Use compactAll() periodically for long-running apps.</li>
+          <li>Back up NDJSON files to external storage.</li>
+          <li>Use environment-specific roots for multi-tenant deployments.</li>
+        </ul>
+      </section>
+    </template>
+
+    <!-- CONTACT -->
+    <template x-if="view==='contact'">
+      <section class="card">
+        <h2>Contact Us</h2>
+        <p style="color:var(--muted)">Questions, enterprise support, or contributions — reach out below.</p>
+        <form @submit.prevent="submitContact" class="stack">
+          <label>Name <input type="text" x-model="contact.name" required></label>
+          <label>Email <input type="email" x-model="contact.email" required></label>
+          <label>Message <textarea x-model="contact.message" rows="5" required></textarea></label>
+          <div style="display:flex;gap:.5rem">
+            <button class="btn-primary" type="submit">Send</button>
+            <button type="button" class="nav-link" @click="contact={name:'',email:'',message:''}">Clear</button>
+          </div>
+          <template x-if="contactStatus">
+            <div style="margin-top:.5rem;color:green">Message queued (mock). Replace with server endpoint when ready.</div>
+          </template>
+        </form>
+      </section>
+    </template>
+
+    <!-- LEGAL (License & Privacy) -->
+    <template x-if="view==='legal'">
+      <section class="card">
+        <h2>Legal</h2>
+        <h3>License</h3>
+        <pre class="code">MIT License
+
+Copyright (c) 2025 John Kesh Mahugu
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction...
+        </pre>
+
+        <h3>Privacy Policy (short)</h3>
+        <p style="color:var(--muted)">This demo site does not collect personal data persistently. Contact messages are not stored by default. When integrating into your app, follow local laws and best practices for user data protection.</p>
+      </section>
+    </template>
+
+  </main>
+
+  <footer>
+    <div class="container" style="display:flex;flex-direction:column;gap:.5rem;align-items:center;">
+      <div>orn.js • Single-file ORM + JSON DB • <small style="color:var(--muted)">MIT</small></div>
+      <div style="display:flex;gap:0.5rem;">
+        <a class="nav-link" href="#" @click.prevent="goto('docs')">Docs</a>
+        <a class="nav-link" href="#" @click.prevent="goto('legal')">License</a>
+        <a class="nav-link" href="#" @click.prevent="goto('contact')">Contact</a>
+      </div>
+      <small style="color:var(--muted)">Made with 🍊 by John Kesh Mahugu • 2025</small>
+    </div>
+  </footer>
+
+  <!-- Alpine component logic -->
+  <script>
+    function site(){
+      return {
+        view:'home',
+        contact: {name:'',email:'',message:''},
+        contactStatus: false,
+        init(){ /* route based on hash */ 
+          const h = location.hash.replace('#','');
+          if(h) this.view = h;
+          window.addEventListener('hashchange', ()=> {
+            const name = location.hash.replace('#','');
+            if(name) this.view = name;
+          });
+        },
+        goto(page){
+          this.view = page;
+          location.hash = page;
+          window.scrollTo({top:0,behavior:'smooth'});
+        },
+        submitContact(){
+          // mock posting: developers should replace with fetch('/api/contact', {...})
+          this.contactStatus = true;
+          setTimeout(()=>{ this.contact={name:'',email:'',message:''}; this.contactStatus=false; alert('Thanks — this demo does not send emails. Hook up a server endpoint to handle messages.'); }, 800);
+        }
+      };
+    }
+  </script>
+
+</body>
+</html>
+
+<!--<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -17,4 +357,4 @@
      Find the project on <a href="https://github.com/johnmwirigimahugu/orn.js">GitHub</a>.
   </p>
 </body>
-</html>
+</html>-->
